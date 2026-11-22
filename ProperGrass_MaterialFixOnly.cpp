@@ -1596,8 +1596,8 @@ static DWORD WINAPI InitThread(LPVOID)
     char selfPath[MAX_PATH] = ""; GetModuleFileNameA(g_self, selfPath, MAX_PATH);
     { char* ss = strrchr(selfPath, '\\'); if (ss) *ss = 0; else strcpy(selfPath, path); }
     std::string modDir = selfPath;
-    g_log = fopen((modDir + "\\ProperGrass.log").c_str(), "w");
-    std::string ini = modDir + "\\ProperGrass.ini";
+    g_log = fopen((modDir + "\\GTAIV.EFLC.ProceduralFixes.MaterialFix.log").c_str(), "w");
+    std::string ini = modDir + "\\GTAIV.EFLC.ProceduralFixes.MaterialFix.ini";
     AddVectoredExceptionHandler(1, VehLog);
     cfg.enabled = GetPrivateProfileIntA("Main", "Enabled", 1, ini.c_str());
     cfg.triCapacity = GetPrivateProfileIntA("Main", "TriCapacity", 16384, ini.c_str());

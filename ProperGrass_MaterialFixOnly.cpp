@@ -473,7 +473,8 @@ static void GeomAdd(uintptr_t tri, const float* t4, bool inj, uint32_t word, uin
 {
     GeomRemove(tri);
     TriGeom g; for (int k = 0; k < 3; k++) { g.v[k * 3] = t4[k * 4]; g.v[k * 3 + 1] = t4[k * 4 + 1]; g.v[k * 3 + 2] = t4[k * 4 + 2]; }
-    g.mat = (uint8_t)(word & 0xff); g.ours = inj; g.inj = inj || g_grassMat[g.mat]; g.rec = rec; g.slot = slot;      // every grass triangle (tagged by the mod or by the game) is checked against covers: the game's own grass reaches under pavements too
+    g.mat = (uint8_t)(word & 0xff); g.ours = inj; g.inj = cfg.onlyOurs ? inj : (inj || g_grassMat[g.mat]);      // MaterialFixOnly: cover checks / regeneration only for the grass the mod made; game-tagged grass is left alone (else the game's objects there were released as 'covered' and made again, over and over = flicker)
+     g.rec = rec; g.slot = slot;      // every grass triangle (tagged by the mod or by the game) is checked against covers: the game's own grass reaches under pavements too
     float mnx = std::min(g.v[0], std::min(g.v[3], g.v[6])), mxx = std::max(g.v[0], std::max(g.v[3], g.v[6]));
     float mny = std::min(g.v[1], std::min(g.v[4], g.v[7])), mxy = std::max(g.v[1], std::max(g.v[4], g.v[7]));
     g.x0 = (int)floorf(mnx / kCell); g.x1 = (int)floorf(mxx / kCell); g.y0 = (int)floorf(mny / kCell); g.y1 = (int)floorf(mxy / kCell);
